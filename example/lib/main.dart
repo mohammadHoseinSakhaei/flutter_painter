@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Flutter Painter Example",
       theme: ThemeData(
-          primaryColor: Colors.brown, accentColor: Colors.amberAccent),
+          primaryColor: Colors.orange, shadowColor: Colors.amberAccent),
       home: const FlutterPainterExample(),
     );
   }
@@ -44,34 +44,7 @@ class _FlutterPainterExampleState extends State<FlutterPainterExample> {
     ..style = PaintingStyle.stroke
     ..strokeCap = StrokeCap.round;
 
-  static const List<String> imageLinks = [
-    "https://i.imgur.com/btoI5OX.png",
-    "https://i.imgur.com/EXTQFt7.png",
-    "https://i.imgur.com/EDNjJYL.png",
-    "https://i.imgur.com/uQKD6NL.png",
-    "https://i.imgur.com/cMqVRbl.png",
-    "https://i.imgur.com/1cJBAfI.png",
-    "https://i.imgur.com/eNYfHKL.png",
-    "https://i.imgur.com/c4Ag5yt.png",
-    "https://i.imgur.com/GhpCJuf.png",
-    "https://i.imgur.com/XVMeluF.png",
-    "https://i.imgur.com/mt2yO6Z.png",
-    "https://i.imgur.com/rw9XP1X.png",
-    "https://i.imgur.com/pD7foZ8.png",
-    "https://i.imgur.com/13Y3vp2.png",
-    "https://i.imgur.com/ojv3yw1.png",
-    "https://i.imgur.com/f8ZNJJ7.png",
-    "https://i.imgur.com/BiYkHzw.png",
-    "https://i.imgur.com/snJOcEz.png",
-    "https://i.imgur.com/b61cnhi.png",
-    "https://i.imgur.com/FkDFzYe.png",
-    "https://i.imgur.com/P310x7d.png",
-    "https://i.imgur.com/5AHZpua.png",
-    "https://i.imgur.com/tmvJY4r.png",
-    "https://i.imgur.com/PdVfGkV.png",
-    "https://i.imgur.com/1PRzwBf.png",
-    "https://i.imgur.com/VeeMfBS.png",
-  ];
+  static const List<String> imageLinks = [];
 
   @override
   void initState() {
@@ -397,7 +370,7 @@ class _FlutterPainterExampleState extends State<FlutterPainterExample> {
                 icon: Icon(
                   PhosphorIcons.eraser,
                   color: controller.freeStyleMode == FreeStyleMode.erase
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).primaryColor
                       : null,
                 ),
                 onPressed: toggleFreeStyleErase,
@@ -407,7 +380,7 @@ class _FlutterPainterExampleState extends State<FlutterPainterExample> {
                 icon: Icon(
                   PhosphorIcons.scribbleLoop,
                   color: controller.freeStyleMode == FreeStyleMode.draw
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).primaryColor
                       : null,
                 ),
                 onPressed: toggleFreeStyleDraw,
@@ -417,7 +390,7 @@ class _FlutterPainterExampleState extends State<FlutterPainterExample> {
                 icon: Icon(
                   PhosphorIcons.textT,
                   color: textFocusNode.hasFocus
-                      ? Theme.of(context).accentColor
+                      ? Theme.of(context).primaryColor
                       : null,
                 ),
                 onPressed: addText,
@@ -460,7 +433,7 @@ class _FlutterPainterExampleState extends State<FlutterPainterExample> {
                     child: Icon(
                       getShapeIcon(controller.shapeFactory),
                       color: controller.shapeFactory != null
-                          ? Theme.of(context).accentColor
+                          ? Theme.of(context).primaryColor
                           : null,
                     ),
                   ),
@@ -469,7 +442,7 @@ class _FlutterPainterExampleState extends State<FlutterPainterExample> {
                 IconButton(
                   icon: Icon(
                     getShapeIcon(controller.shapeFactory),
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                   onPressed: () => selectShape(null),
                 ),
@@ -523,13 +496,13 @@ class _FlutterPainterExampleState extends State<FlutterPainterExample> {
 
   void addSticker() async {
     final imageLink = await showDialog<String>(
-        context: context,
-        builder: (context) => const SelectStickerImageDialog(
-              imagesLinks: imageLinks,
-            ));
+      context: context,
+      builder: (context) => const SelectStickerImageDialog(
+        imagesLinks: imageLinks,
+      ),
+    );
     if (imageLink == null) return;
-    controller.addImage(
-        await NetworkImage(imageLink).image, const Size(100, 100));
+    controller.addImage(await NetworkImage(imageLink).image);
   }
 
   void setFreeStyleStrokeWidth(double value) {
